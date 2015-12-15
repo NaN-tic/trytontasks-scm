@@ -30,9 +30,9 @@ def check_revision(client, module, revision, branch):
 def hg_clone(url, path, branch="default", revision=None):
     url = get_url(url)
     extended_args = ['--pull']
-    if revision:
+    if revision or branch:
         extended_args.append('-u')
-        extended_args.append(revision)
+        extended_args.append(revision or branch)
     try:
         client = hgapi.hg_clone(url, path, *extended_args)
         if revision:
@@ -46,7 +46,7 @@ def hg_clone(url, path, branch="default", revision=None):
 
     if revision:
         print "Repo " + t.bold(path) + t.green(" Updated") + \
-            " to Revision: " + revision
+            " to revision: " + revision
     else:
         print "Repo " + t.bold(path) + t.green(" Updated") + \
             " and branch: " + branch
